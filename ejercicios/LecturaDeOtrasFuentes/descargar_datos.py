@@ -132,12 +132,17 @@ def leer_txt(ruta, anio, mes):
     """
     Lee el archivo pipe-delimited (Latin-1) y agrega columnas anio_archivo y mes_archivo.
     """
+    # Los archivos del SAT tienen trailing | en cada fila de datos pero no en el header.
+    # Eso hace que pandas desplace todas las columnas +1 (interpreta col[0] como índice).
+    # ponytail: stripeamos el trailing | antes de parsear — más simple que index_col tricks.
+    with open(ruta, "rb") as f:
+        content = f.read().decode("latin-1")
+    cleaned = "\n".join(line.rstrip("|") for line in content.splitlines())
+
     df = pd.read_csv(
-        ruta,
+        io.StringIO(cleaned),
         sep="|",
-        encoding="latin-1",
         dtype=str,
-        on_bad_lines="skip",   # algunas filas tienen columnas extra al final
     )
 
     # Limpiar nombres de columna (el SAT deja espacios)
