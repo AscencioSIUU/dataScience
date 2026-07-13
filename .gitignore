@@ -1,0 +1,16 @@
+# Datos generados (descargados/procesados por scripts)
+Datos/
+
+# Python / entornos virtuales
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+env/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
