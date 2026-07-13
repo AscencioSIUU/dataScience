@@ -143,6 +143,7 @@ def leer_txt(ruta, anio, mes):
         io.StringIO(cleaned),
         sep="|",
         dtype=str,
+        on_bad_lines="skip",   # algunas filas del SAT tienen un campo extra (datos corruptos)
     )
 
     # Limpiar nombres de columna (el SAT deja espacios)
